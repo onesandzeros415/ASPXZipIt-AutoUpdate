@@ -1,0 +1,5 @@
+C:\Users\matt.costello\Documents\Visual Studio 2012\Projects\ASPXZipIt-AutoUpdate\ASPXZipIt-AutoUpdate\bin\ASPXZipIt-AutoUpdate.dll
+C:\Users\matt.costello\Documents\Visual Studio 2012\Projects\ASPXZipIt-AutoUpdate\ASPXZipIt-AutoUpdate\bin\ASPXZipIt-AutoUpdate.pdb
+C:\Users\matt.costello\Documents\Visual Studio 2012\Projects\ASPXZipIt-AutoUpdate\ASPXZipIt-AutoUpdate\obj\Debug\ASPXZipIt-AutoUpdate.csprojResolveAssemblyReference.cache
+C:\Users\matt.costello\Documents\Visual Studio 2012\Projects\ASPXZipIt-AutoUpdate\ASPXZipIt-AutoUpdate\obj\Debug\ASPXZipIt-AutoUpdate.dll
+C:\Users\matt.costello\Documents\Visual Studio 2012\Projects\ASPXZipIt-AutoUpdate\ASPXZipIt-AutoUpdate\obj\Debug\ASPXZipIt-AutoUpdate.pdb
