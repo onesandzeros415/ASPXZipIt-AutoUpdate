@@ -39,11 +39,11 @@
         string filename16 = "/Updating.gif";
         string filename17 = "/StyleSheet.css";
 
-        string backupusersxml = "/users/xml";
-        string backupaspxzipitwebconfig = "/Web.config";
+        string backupusersxml = "\\users\\xml";
+        string backupaspxzipitwebconfig = "\\Web.config";
 
 
-        string installerpath_App_Data = path + "/App_Data";
+        string installerpath_App_Data = path + "\\App_Data";
         string installerpath_update_backup = path + "/aspxzipit_backup";
         string installerpath_bin = path + "/bin";
         string installerpath_aspxzipit = path + "/aspxzipit";
