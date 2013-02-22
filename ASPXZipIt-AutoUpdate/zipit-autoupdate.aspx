@@ -32,12 +32,13 @@
         string filename9 = "/zipit-logs.aspx";
         string filename10 = "/zipit-login.aspx";
         string filename11 = "/zipit-settings.aspx";
-        string filename12 = "/zipit-update.aspx";
-        string filename13 = "/Web.config";
-        string filename14 = "/DBResultPage.aspx";
-        string filename15 = "/ResultPage.aspx";
-        string filename16 = "/Updating.gif";
-        string filename17 = "/StyleSheet.css";
+        string filename12 = "/zipit-success.aspx";
+        string filename13 = "/zipit-update.aspx";
+        string filename14 = "/Web.config";
+        string filename15 = "/DBResultPage.aspx";
+        string filename16 = "/ResultPage.aspx";
+        string filename17 = "/Updating.gif";
+        string filename18 = "/StyleSheet.css";
 
         string backupusersxml = "\\users.xml";
         string backupaspxzipitwebconfig = "\\Web.config";
@@ -51,19 +52,26 @@
         string installerpath_images = path + "/aspxzipit" + "/Images";
         string installerpath_styles = path + "/aspxzipit" + "/styles";
         string installerpath_sqlbak = path + "/aspxzipit_sql_bak";
-        string LogResults1 = timestamp + "  AspxZipIt update has begun.                                                     \r\n";
-        string LogResults2 = timestamp + "  AspxZipIt has been successfully update to:" + installerpath_bin + "           \r\n";
-        string LogResults3 = timestamp + "  Application has been successfully rebuilt.                                       \r\n";
-        string LogResults4 = timestamp + "  CloudFiles API Information has been copied to" + installerpath_aspxzipit + filename13 + "\r\n";
-        string LogResults5 = timestamp + "  ASPXZipIt crendentials have been successfully copied.                                            \r\n";
+        string LogResults1 = timestamp + "  ASPXZipIt Root Web.Config and Users.xml backed up successfully.                                                     \r\n";
+        string LogResults2 = timestamp + "  AspxZipIt update has begun.                                                     \r\n";
+        string LogResults3 = timestamp + "  AspxZipIt has been successfully update to:" + installerpath_bin + "           \r\n";
+        string LogResults4 = timestamp + "  Application has been successfully rebuilt.                                       \r\n";
+        string LogResults5 = timestamp + "  CloudFiles API Information has been copied to" + installerpath_aspxzipit + filename13 + "\r\n";
+        string LogResults6 = timestamp + "  ASPXZipIt crendentials have been successfully copied.                                            \r\n";
 
         try
         {
             Directory.CreateDirectory(installerpath_update_backup);
             File.Copy(installerpath_App_Data + backupusersxml, installerpath_update_backup + backupusersxml);
             File.Copy(installerpath_aspxzipit + backupaspxzipitwebconfig, installerpath_update_backup + backupaspxzipitwebconfig);
-            
+
+            FileInfo fi1 = new FileInfo(installerpath_App_Data + backupusersxml);
+            fi1.Delete();
+            FileInfo fi2 = new FileInfo(installerpath_aspxzipit + backupaspxzipitwebconfig);
+            fi2.Delete();
             EventLogReporting(LogResults1);
+            
+            EventLogReporting(LogResults2);
 
             WebClient webClient = new WebClient();
             webClient.DownloadFile("https://github.com/onesandzeros415/ASPXZipIt-NET35/raw/master/App_Data/users.xml", @installerpath_App_Data + filename1);
@@ -76,28 +84,36 @@
             webClient.DownloadFile("https://github.com/onesandzeros415/ASPXZipIt-NET35/raw/master/aspxzipit/zipit-logs.aspx", @installerpath_aspxzipit + filename9);
             webClient.DownloadFile("https://github.com/onesandzeros415/ASPXZipIt-NET35/raw/master/aspxzipit/zipit-login.aspx", @installerpath_aspxzipit + filename10);
             webClient.DownloadFile("https://github.com/onesandzeros415/ASPXZipIt-NET35/raw/master/aspxzipit/zipit-settings.aspx", @installerpath_aspxzipit + filename11);
-            webClient.DownloadFile("https://github.com/onesandzeros415/ASPXZipIt-NET35/raw/master/aspxzipit/zipit-update.aspx", @installerpath_aspxzipit + filename12);
-            webClient.DownloadFile("https://github.com/onesandzeros415/ASPXZipIt-NET35/raw/master/aspxzipit/Web.config", @installerpath_aspxzipit + filename13);
-            webClient.DownloadFile("https://github.com/onesandzeros415/ASPXZipIt-NET35/raw/master/aspxzipit/Progress/DBResultPage.aspx", @installerpath_progress + filename14);
-            webClient.DownloadFile("https://github.com/onesandzeros415/ASPXZipIt-NET35/raw/master/aspxzipit/Progress/ResultPage.aspx", @installerpath_progress + filename15);
-            webClient.DownloadFile("https://github.com/onesandzeros415/ASPXZipIt-NET35/raw/master/aspxzipit/images/Updating.gif", @installerpath_images + filename16);
-            webClient.DownloadFile("https://github.com/onesandzeros415/ASPXZipIt-NET35/raw/master/aspxzipit/styles/StyleSheet.css", @installerpath_styles + filename17);
-
-            EventLogReporting(LogResults2);
-
-            rebuildapplication();
+            webClient.DownloadFile("https://github.com/onesandzeros415/ASPXZipIt-NET35/raw/master/aspxzipit/zipit-success.aspx", @installerpath_aspxzipit + filename12);
+            webClient.DownloadFile("https://github.com/onesandzeros415/ASPXZipIt-NET35/raw/master/aspxzipit/zipit-update.aspx", @installerpath_aspxzipit + filename13);
+            webClient.DownloadFile("https://github.com/onesandzeros415/ASPXZipIt-NET35/raw/master/aspxzipit/Web.config", @installerpath_aspxzipit + filename14);
+            webClient.DownloadFile("https://github.com/onesandzeros415/ASPXZipIt-NET35/raw/master/aspxzipit/Progress/DBResultPage.aspx", @installerpath_progress + filename15);
+            webClient.DownloadFile("https://github.com/onesandzeros415/ASPXZipIt-NET35/raw/master/aspxzipit/Progress/ResultPage.aspx", @installerpath_progress + filename16);
+            webClient.DownloadFile("https://github.com/onesandzeros415/ASPXZipIt-NET35/raw/master/aspxzipit/images/Updating.gif", @installerpath_images + filename17);
+            webClient.DownloadFile("https://github.com/onesandzeros415/ASPXZipIt-NET35/raw/master/aspxzipit/styles/StyleSheet.css", @installerpath_styles + filename18);
 
             EventLogReporting(LogResults3);
 
-            File.Copy(installerpath_update_backup + backupusersxml, installerpath_App_Data + backupusersxml);
+            rebuildapplication();
 
             EventLogReporting(LogResults4);
 
-            File.Copy(installerpath_update_backup + backupaspxzipitwebconfig, installerpath_aspxzipit + backupaspxzipitwebconfig);
+            File.Copy(installerpath_update_backup + backupusersxml, installerpath_App_Data + backupusersxml, true);
 
             EventLogReporting(LogResults5);
 
-            Response.Redirect("/aspxzipit/zipit-settings.aspx", true);
+            File.Copy(installerpath_update_backup + backupaspxzipitwebconfig, installerpath_aspxzipit + backupaspxzipitwebconfig, true);
+
+            EventLogReporting(LogResults6);
+
+            DirectoryInfo dirInfo1 = new DirectoryInfo(installerpath_update_backup);
+
+            foreach (FileInfo f in dirInfo1.GetFiles())
+            {
+                f.Delete();
+            }
+
+            Response.Redirect("/aspxzipit/zipit-settings.aspx", false);
         }
         catch (Exception ex)
         {
@@ -113,6 +129,7 @@
             string filename = "web.config";
             string renamed_filename = "web.config.aspxzipit_renamed";
             string backup_filename = "web.config.aspxzipit_bak";
+            string LogResults1 = timestamp + "  Application has been rebuilt successfully.                            \r\n";
 
             if (File.Exists(path + backup_filename))
             {
@@ -123,12 +140,16 @@
                 File.Copy(path + filename, path + backup_filename);
                 File.Move(path + filename, path + renamed_filename);
                 File.Move(path + renamed_filename, path + filename);
+                File.Delete(path + backup_filename);
+                EventLogReporting(LogResults1);
             }
             else
             {
                 File.Copy(path + filename, path + backup_filename);
                 File.Move(path + filename, path + renamed_filename);
                 File.Move(path + renamed_filename, path + filename);
+                File.Delete(path + backup_filename);
+                EventLogReporting(LogResults1);
             }
         }
         catch (Exception ex)
