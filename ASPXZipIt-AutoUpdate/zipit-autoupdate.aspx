@@ -21,6 +21,8 @@
 
     protected void Page_Load(object sender, EventArgs e)
     {
+        string DotNetVersion = Request.QueryString["DotNetVersion"];
+
         string path = Server.MapPath("~/");
         string filename1 = "/users.xml";
         string filename2 = "/Ionic.Zip.dll";
@@ -59,67 +61,136 @@
         string LogResults5 = timestamp + "  CloudFiles API Information has been copied to" + installerpath_aspxzipit + filename13 + "\r\n";
         string LogResults6 = timestamp + "  ASPXZipIt crendentials have been successfully copied.                                            \r\n";
 
-        try
+        if (DotNetVersion == "35")
         {
-            Directory.CreateDirectory(installerpath_update_backup);
-            File.Copy(installerpath_App_Data + backupusersxml, installerpath_update_backup + backupusersxml);
-            File.Copy(installerpath_aspxzipit + backupaspxzipitwebconfig, installerpath_update_backup + backupaspxzipitwebconfig);
-
-            FileInfo fi1 = new FileInfo(installerpath_App_Data + backupusersxml);
-            fi1.Delete();
-            FileInfo fi2 = new FileInfo(installerpath_aspxzipit + backupaspxzipitwebconfig);
-            fi2.Delete();
-            EventLogReporting(LogResults1);
-            
-            EventLogReporting(LogResults2);
-
-            WebClient webClient = new WebClient();
-            webClient.DownloadFile("https://github.com/onesandzeros415/ASPXZipIt-NET35/raw/master/App_Data/users.xml", @installerpath_App_Data + filename1);
-            webClient.DownloadFile("https://github.com/onesandzeros415/ASPXZipIt-NET35/raw/master/bin/Ionic.Zip.dll", @installerpath_bin + filename2);
-            webClient.DownloadFile("https://github.com/onesandzeros415/ASPXZipIt-NET35/raw/master/bin/ASPXZipIt-NET35.dll", @installerpath_bin + filename3);
-            webClient.DownloadFile("https://github.com/onesandzeros415/ASPXZipIt-NET35/raw/master/bin/OpenStack.Swift.dll", @installerpath_bin + filename5);
-            webClient.DownloadFile("https://github.com/onesandzeros415/ASPXZipIt-NET35/raw/master/bin/Rackspace.Cloudfiles.dll", @installerpath_bin + filename6);
-            webClient.DownloadFile("https://github.com/onesandzeros415/ASPXZipIt-NET35/raw/master/aspxzipit/Default.aspx", @installerpath_aspxzipit + filename7);
-            webClient.DownloadFile("https://github.com/onesandzeros415/ASPXZipIt-NET35/raw/master/aspxzipit/zipit-db.aspx", @installerpath_aspxzipit + filename8);
-            webClient.DownloadFile("https://github.com/onesandzeros415/ASPXZipIt-NET35/raw/master/aspxzipit/zipit-logs.aspx", @installerpath_aspxzipit + filename9);
-            webClient.DownloadFile("https://github.com/onesandzeros415/ASPXZipIt-NET35/raw/master/aspxzipit/zipit-login.aspx", @installerpath_aspxzipit + filename10);
-            webClient.DownloadFile("https://github.com/onesandzeros415/ASPXZipIt-NET35/raw/master/aspxzipit/zipit-settings.aspx", @installerpath_aspxzipit + filename11);
-            webClient.DownloadFile("https://github.com/onesandzeros415/ASPXZipIt-NET35/raw/master/aspxzipit/zipit-success.aspx", @installerpath_aspxzipit + filename12);
-            webClient.DownloadFile("https://github.com/onesandzeros415/ASPXZipIt-NET35/raw/master/aspxzipit/zipit-update.aspx", @installerpath_aspxzipit + filename13);
-            webClient.DownloadFile("https://github.com/onesandzeros415/ASPXZipIt-NET35/raw/master/aspxzipit/Web.config", @installerpath_aspxzipit + filename14);
-            webClient.DownloadFile("https://github.com/onesandzeros415/ASPXZipIt-NET35/raw/master/aspxzipit/Progress/DBResultPage.aspx", @installerpath_progress + filename15);
-            webClient.DownloadFile("https://github.com/onesandzeros415/ASPXZipIt-NET35/raw/master/aspxzipit/Progress/ResultPage.aspx", @installerpath_progress + filename16);
-            webClient.DownloadFile("https://github.com/onesandzeros415/ASPXZipIt-NET35/raw/master/aspxzipit/images/Updating.gif", @installerpath_images + filename17);
-            webClient.DownloadFile("https://github.com/onesandzeros415/ASPXZipIt-NET35/raw/master/aspxzipit/styles/StyleSheet.css", @installerpath_styles + filename18);
-
-            EventLogReporting(LogResults3);
-
-            rebuildapplication();
-
-            EventLogReporting(LogResults4);
-
-            File.Copy(installerpath_update_backup + backupusersxml, installerpath_App_Data + backupusersxml, true);
-
-            EventLogReporting(LogResults5);
-
-            File.Copy(installerpath_update_backup + backupaspxzipitwebconfig, installerpath_aspxzipit + backupaspxzipitwebconfig, true);
-
-            EventLogReporting(LogResults6);
-
-            DirectoryInfo dirInfo1 = new DirectoryInfo(installerpath_update_backup);
-
-            foreach (FileInfo f in dirInfo1.GetFiles())
+            try
             {
-                f.Delete();
+                Directory.CreateDirectory(installerpath_update_backup);
+                File.Copy(installerpath_App_Data + backupusersxml, installerpath_update_backup + backupusersxml);
+                File.Copy(installerpath_aspxzipit + backupaspxzipitwebconfig, installerpath_update_backup + backupaspxzipitwebconfig);
+
+                FileInfo fi1 = new FileInfo(installerpath_App_Data + backupusersxml);
+                fi1.Delete();
+                FileInfo fi2 = new FileInfo(installerpath_aspxzipit + backupaspxzipitwebconfig);
+                fi2.Delete();
+                EventLogReporting(LogResults1);
+
+                EventLogReporting(LogResults2);
+
+                WebClient webClient = new WebClient();
+                webClient.DownloadFile("https://github.com/onesandzeros415/ASPXZipIt-NET35/raw/master/App_Data/users.xml", @installerpath_App_Data + filename1);
+                webClient.DownloadFile("https://github.com/onesandzeros415/ASPXZipIt-NET35/raw/master/bin/Ionic.Zip.dll", @installerpath_bin + filename2);
+                webClient.DownloadFile("https://github.com/onesandzeros415/ASPXZipIt-NET35/raw/master/bin/ASPXZipIt-NET35.dll", @installerpath_bin + filename3);
+                webClient.DownloadFile("https://github.com/onesandzeros415/ASPXZipIt-NET35/raw/master/bin/OpenStack.Swift.dll", @installerpath_bin + filename5);
+                webClient.DownloadFile("https://github.com/onesandzeros415/ASPXZipIt-NET35/raw/master/bin/Rackspace.Cloudfiles.dll", @installerpath_bin + filename6);
+                webClient.DownloadFile("https://github.com/onesandzeros415/ASPXZipIt-NET35/raw/master/aspxzipit/Default.aspx", @installerpath_aspxzipit + filename7);
+                webClient.DownloadFile("https://github.com/onesandzeros415/ASPXZipIt-NET35/raw/master/aspxzipit/zipit-db.aspx", @installerpath_aspxzipit + filename8);
+                webClient.DownloadFile("https://github.com/onesandzeros415/ASPXZipIt-NET35/raw/master/aspxzipit/zipit-logs.aspx", @installerpath_aspxzipit + filename9);
+                webClient.DownloadFile("https://github.com/onesandzeros415/ASPXZipIt-NET35/raw/master/aspxzipit/zipit-login.aspx", @installerpath_aspxzipit + filename10);
+                webClient.DownloadFile("https://github.com/onesandzeros415/ASPXZipIt-NET35/raw/master/aspxzipit/zipit-settings.aspx", @installerpath_aspxzipit + filename11);
+                webClient.DownloadFile("https://github.com/onesandzeros415/ASPXZipIt-NET35/raw/master/aspxzipit/zipit-success.aspx", @installerpath_aspxzipit + filename12);
+                webClient.DownloadFile("https://github.com/onesandzeros415/ASPXZipIt-NET35/raw/master/aspxzipit/zipit-update.aspx", @installerpath_aspxzipit + filename13);
+                webClient.DownloadFile("https://github.com/onesandzeros415/ASPXZipIt-NET35/raw/master/aspxzipit/Web.config", @installerpath_aspxzipit + filename14);
+                webClient.DownloadFile("https://github.com/onesandzeros415/ASPXZipIt-NET35/raw/master/aspxzipit/Progress/DBResultPage.aspx", @installerpath_progress + filename15);
+                webClient.DownloadFile("https://github.com/onesandzeros415/ASPXZipIt-NET35/raw/master/aspxzipit/Progress/ResultPage.aspx", @installerpath_progress + filename16);
+                webClient.DownloadFile("https://github.com/onesandzeros415/ASPXZipIt-NET35/raw/master/aspxzipit/images/Updating.gif", @installerpath_images + filename17);
+                webClient.DownloadFile("https://github.com/onesandzeros415/ASPXZipIt-NET35/raw/master/aspxzipit/styles/StyleSheet.css", @installerpath_styles + filename18);
+
+                EventLogReporting(LogResults3);
+
+                rebuildapplication();
+
+                EventLogReporting(LogResults4);
+
+                File.Copy(installerpath_update_backup + backupusersxml, installerpath_App_Data + backupusersxml, true);
+
+                EventLogReporting(LogResults5);
+
+                File.Copy(installerpath_update_backup + backupaspxzipitwebconfig, installerpath_aspxzipit + backupaspxzipitwebconfig, true);
+
+                EventLogReporting(LogResults6);
+
+                DirectoryInfo dirInfo1 = new DirectoryInfo(installerpath_update_backup);
+
+                foreach (FileInfo f in dirInfo1.GetFiles())
+                {
+                    f.Delete();
+                }
+
+                Response.Redirect("/aspxzipit/zipit-settings.aspx", false);
             }
-
-            Response.Redirect("/aspxzipit/zipit-settings.aspx", false);
+            catch (Exception ex)
+            {
+                lblInfo.Text = "The process failed:" + ex.ToString();
+            }
         }
-        catch (Exception ex)
+        else if (DotNetVersion == "40")
         {
-            lblInfo.Text = "The process failed:" + ex.ToString();
-        }
+            try
+            {
+                Directory.CreateDirectory(installerpath_update_backup);
+                File.Copy(installerpath_App_Data + backupusersxml, installerpath_update_backup + backupusersxml);
+                File.Copy(installerpath_aspxzipit + backupaspxzipitwebconfig, installerpath_update_backup + backupaspxzipitwebconfig);
 
+                FileInfo fi1 = new FileInfo(installerpath_App_Data + backupusersxml);
+                fi1.Delete();
+                FileInfo fi2 = new FileInfo(installerpath_aspxzipit + backupaspxzipitwebconfig);
+                fi2.Delete();
+                EventLogReporting(LogResults1);
+
+                EventLogReporting(LogResults2);
+
+                WebClient webClient = new WebClient();
+                webClient.DownloadFile("https://github.com/onesandzeros415/ASPXZipIt-NET40/raw/master/App_Data/users.xml", @installerpath_App_Data + filename1);
+                webClient.DownloadFile("https://github.com/onesandzeros415/ASPXZipIt-NET40/raw/master/bin/Ionic.Zip.dll", @installerpath_bin + filename2);
+                webClient.DownloadFile("https://github.com/onesandzeros415/ASPXZipIt-NET40/raw/master/bin/ASPXZipIt-NET35.dll", @installerpath_bin + filename3);
+                webClient.DownloadFile("https://github.com/onesandzeros415/ASPXZipIt-NET40/raw/master/bin/OpenStack.Swift.dll", @installerpath_bin + filename5);
+                webClient.DownloadFile("https://github.com/onesandzeros415/ASPXZipIt-NET40/raw/master/bin/Rackspace.Cloudfiles.dll", @installerpath_bin + filename6);
+                webClient.DownloadFile("https://github.com/onesandzeros415/ASPXZipIt-NET40/raw/master/aspxzipit/Default.aspx", @installerpath_aspxzipit + filename7);
+                webClient.DownloadFile("https://github.com/onesandzeros415/ASPXZipIt-NET40/raw/master/aspxzipit/zipit-db.aspx", @installerpath_aspxzipit + filename8);
+                webClient.DownloadFile("https://github.com/onesandzeros415/ASPXZipIt-NET40/raw/master/aspxzipit/zipit-logs.aspx", @installerpath_aspxzipit + filename9);
+                webClient.DownloadFile("https://github.com/onesandzeros415/ASPXZipIt-NET40/raw/master/aspxzipit/zipit-login.aspx", @installerpath_aspxzipit + filename10);
+                webClient.DownloadFile("https://github.com/onesandzeros415/ASPXZipIt-NET40/raw/master/aspxzipit/zipit-settings.aspx", @installerpath_aspxzipit + filename11);
+                webClient.DownloadFile("https://github.com/onesandzeros415/ASPXZipIt-NET40/raw/master/aspxzipit/zipit-success.aspx", @installerpath_aspxzipit + filename12);
+                webClient.DownloadFile("https://github.com/onesandzeros415/ASPXZipIt-NET40/raw/master/aspxzipit/zipit-update.aspx", @installerpath_aspxzipit + filename13);
+                webClient.DownloadFile("https://github.com/onesandzeros415/ASPXZipIt-NET40/raw/master/aspxzipit/Web.config", @installerpath_aspxzipit + filename14);
+                webClient.DownloadFile("https://github.com/onesandzeros415/ASPXZipIt-NET40/raw/master/aspxzipit/Progress/DBResultPage.aspx", @installerpath_progress + filename15);
+                webClient.DownloadFile("https://github.com/onesandzeros415/ASPXZipIt-NET40/raw/master/aspxzipit/Progress/ResultPage.aspx", @installerpath_progress + filename16);
+                webClient.DownloadFile("https://github.com/onesandzeros415/ASPXZipIt-NET40/raw/master/aspxzipit/images/Updating.gif", @installerpath_images + filename17);
+                webClient.DownloadFile("https://github.com/onesandzeros415/ASPXZipIt-NET40/raw/master/aspxzipit/styles/StyleSheet.css", @installerpath_styles + filename18);
+
+                EventLogReporting(LogResults3);
+
+                rebuildapplication();
+
+                EventLogReporting(LogResults4);
+
+                File.Copy(installerpath_update_backup + backupusersxml, installerpath_App_Data + backupusersxml, true);
+
+                EventLogReporting(LogResults5);
+
+                File.Copy(installerpath_update_backup + backupaspxzipitwebconfig, installerpath_aspxzipit + backupaspxzipitwebconfig, true);
+
+                EventLogReporting(LogResults6);
+
+                DirectoryInfo dirInfo1 = new DirectoryInfo(installerpath_update_backup);
+
+                foreach (FileInfo f in dirInfo1.GetFiles())
+                {
+                    f.Delete();
+                }
+
+                Response.Redirect("/aspxzipit/zipit-settings.aspx", false);
+            }
+            catch (Exception ex)
+            {
+                lblInfo.Text = "The process failed:" + ex.ToString();
+            }
+        }
+        else
+        {
+            lblInfo.Text = "In order for Auto Update to function you must tell it what version of .NET you are using.";
+        }
     }
     protected void rebuildapplication()
     {
