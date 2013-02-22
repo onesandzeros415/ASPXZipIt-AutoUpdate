@@ -39,7 +39,7 @@
         string filename16 = "/Updating.gif";
         string filename17 = "/StyleSheet.css";
 
-        string backupusersxml = "\\users\\xml";
+        string backupusersxml = "\\users.xml";
         string backupaspxzipitwebconfig = "\\Web.config";
 
 
