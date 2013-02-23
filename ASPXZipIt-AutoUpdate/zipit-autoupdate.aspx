@@ -122,7 +122,7 @@
                 FileInfo fi3 = new FileInfo(path + autoupdate);
                 fi3.Delete();
                 
-                Response.Redirect("/aspxzipit/zipit-settings.aspx", false);
+                Response.Redirect("/aspxzipit/zipit-logs.aspx", false);
             }
             catch (Exception ex)
             {
