@@ -118,6 +118,7 @@
                 }
 
                 Directory.Delete(installerpath_update_backup);
+                Directory.Delete(installerpath_sqlbak);
 
                 FileInfo fi3 = new FileInfo(path + autoupdate);
                 fi3.Delete();
@@ -185,6 +186,7 @@
                 }
 
                 Directory.Delete(installerpath_update_backup);
+                Directory.Delete(installerpath_sqlbak);
 
                 FileInfo fi3 = new FileInfo(path + autoupdate);
                 fi3.Delete();
