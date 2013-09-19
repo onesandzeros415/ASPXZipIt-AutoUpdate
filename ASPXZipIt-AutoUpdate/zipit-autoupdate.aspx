@@ -13,11 +13,48 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <script runat="server">
 
+    protected static string path = HttpContext.Current.Server.MapPath("~\\");
+    protected static string rootwebConfigPath = HttpContext.Current.Server.MapPath("~\\Web.config");
+
+    protected static string aspxZipItInstaller = "\\ASPXZipIt-Installer.aspx";
+    protected static string fileName1 = "\\users.xml";
+    protected static string fileName2 = "\\Ionic.Zip.dll";
+    protected static string fileName3 = "\\ASPXZipIt-NET35.dll";
+    protected static string fileName4 = "\\ASPXZipIt-NET40.dll";
+    protected static string fileName5 = "\\ASPXZipIt-NET45.dll";
+    protected static string fileName8 = "\\Default.aspx";
+    protected static string fileName26 = "\\Site.Master";
+    protected static string fileName9 = "\\zipit-db.aspx";
+    protected static string fileName10 = "\\zipit-logs.aspx";
+    protected static string fileName11 = "\\zipit-login.aspx";
+    protected static string fileName12 = "\\zipit-settings.aspx";
+    protected static string fileName13 = "\\zipit-success.aspx";
+    protected static string fileName14 = "\\Web.config";
+    protected static string fileName15 = "\\DBResultPage.aspx";
+    protected static string fileName16 = "\\ResultPage.aspx";
+    protected static string fileName17 = "\\progress.gif";
+    protected static string fileName18 = "\\style.css";
+    protected static string fileName22 = "\\background.jpg";
+    protected static string fileName23 = "\\logout.png";
+    protected static string fileName24 = "\\settings.png";
+    protected static string fileName25 = "\\aspxzipit.js";
+
+    protected static string installerPath_AppData = path + "App_Data";
+    protected static string installerPath_bin = path + "bin";
+    protected static string installerPath_aspxzipit = path + "aspxzipit";
+    protected static string installerPath_progress = path + "aspxzipit" + "\\Progress";
+    protected static string installerPath_assets = path + "aspxzipit" + "\\assets";
+    protected static string installerPath_css = path + "aspxzipit" + "\\assets" + "\\css";
+    protected static string installerPath_images = path + "aspxzipit" + "\\assets" + "\\images";
+    protected static string installerPath_js = path + "aspxzipit" + "\\assets" + "\\js";
+    protected static string installerPath_sqlbak = path + "aspxzipit_sql_bak";
+    protected static string installerpath_update_backup = path + "aspxzipit_backup";
+
     //ASPXZipIt Designed and Mainted By: Matthew Costello, 1/28/2013, San Antonio, Texas.
 
-    string backupusersxml = "\\users.xml";
-    string backupaspxzipitwebconfig = "\\Web.config";
-    string autoupdate = "\\zipit-autoupdate.aspx";
+    protected static string backupusersxml = "\\users.xml";
+    protected static string backupaspxzipitwebconfig = "\\Web.config";
+    protected static string autoupdate = "\\zipit-autoupdate.aspx";
 
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -150,39 +187,7 @@
     //Download ASPXZipIt from GitHub
     protected void downloadAspxZipIt(string dotNetVersion)
     {
-        string path = Server.MapPath("~\\");
-        string fileName1 = "\\users.xml";
-        string fileName2 = "\\Ionic.Zip.dll";
-        string fileName3 = "\\ASPXZipIt-NET35.dll";
-        string fileName4 = "\\ASPXZipIt-NET40.dll";
-        string fileName5 = "\\ASPXZipIt-NET45.dll";
-        string fileName6 = "\\OpenStack.Swift.dll";
-        string fileName7 = "\\Rackspace.Cloudfiles.dll";
-        string fileName19 = "\\Newtonsoft.Json.dll";
-        string fileName20 = "\\openstacknet.dll";
-        string fileName21 = "\\SimpleRESTServices.dll";
-        string fileName8 = "\\Default.aspx";
-        string fileName9 = "\\zipit-db.aspx";
-        string fileName10 = "\\zipit-logs.aspx";
-        string fileName11 = "\\zipit-login.aspx";
-        string fileName12 = "\\zipit-settings.aspx";
-        string fileName13 = "\\zipit-success.aspx";
-        string fileName14 = "\\Web.config";
-        string fileName15 = "\\DBResultPage.aspx";
-        string fileName16 = "\\ResultPage.aspx";
-        string fileName17 = "\\progress.gif";
-        string fileName18 = "\\StyleSheet.css";
-
-        string installerPath_AppData = path + "App_Data";
-        string installerPath_bin = path + "bin";
-        string installerPath_aspxzipit = path + "aspxzipit";
-        string installerpath_update_backup = path + "aspxzipit_backup";
-        string installerPath_progress = path + "aspxzipit" + "\\Progress";
-        string installerPath_images = path + "aspxzipit" + "\\Images";
-        string installerPath_styles = path + "aspxzipit" + "\\styles";
-        string installerPath_sqlbak = path + "aspxzipit_sql_bak";
-
-        string LogResults1 = "  The following file has been removed : ";
+        string LogResults1 = "  AspxZipIt has been successfully removed : ";
         string LogResults2 = "  AspxZipIt download has begun.                                                     \r\n";
         string LogResults3 = "  AspxZipIt has been successfully downloaded to:" + installerPath_aspxzipit + "           \r\n";
         string LogResults4 = "  ASPXZipIt crendentials have been successfully copied." + installerPath_AppData + backupusersxml + "                                           \r\n";
@@ -190,16 +195,11 @@
         string LogResults6 = "  All Files have been removed from" + installerpath_update_backup + "\r\n";
         string LogResults7 = "  " + installerpath_update_backup + " has been removed." + "\r\n";
 
-
-        List<string> dirList = new List<string>();
-        dirList.Add(installerPath_aspxzipit);
-        dirList.Add(installerPath_progress);
-        dirList.Add(installerPath_images);
-        dirList.Add(installerPath_styles);
-
+        //Setup source github urls
         List<string> src = new List<string>();
         src.Add("https://github.com/onesandzeros415/" + dotNetVersion + "/raw/master/App_Data/users.xml");
         src.Add("https://github.com/onesandzeros415/" + dotNetVersion + "/raw/master/aspxzipit/Default.aspx");
+        src.Add("https://github.com/onesandzeros415/" + dotNetVersion + "/raw/master/aspxzipit/Site.Master");
         src.Add("https://github.com/onesandzeros415/" + dotNetVersion + "/raw/master/aspxzipit/zipit-db.aspx");
         src.Add("https://github.com/onesandzeros415/" + dotNetVersion + "/raw/master/aspxzipit/zipit-logs.aspx");
         src.Add("https://github.com/onesandzeros415/" + dotNetVersion + "/raw/master/aspxzipit/zipit-login.aspx");
@@ -208,12 +208,18 @@
         src.Add("https://github.com/onesandzeros415/" + dotNetVersion + "/raw/master/aspxzipit/Web.config");
         src.Add("https://github.com/onesandzeros415/" + dotNetVersion + "/raw/master/aspxzipit/Progress/DBResultPage.aspx");
         src.Add("https://github.com/onesandzeros415/" + dotNetVersion + "/raw/master/aspxzipit/Progress/ResultPage.aspx");
-        src.Add("https://github.com/onesandzeros415/" + dotNetVersion + "/raw/master/aspxzipit/images/progress.gif");
-        src.Add("https://github.com/onesandzeros415/" + dotNetVersion + "/raw/master/aspxzipit/styles/StyleSheet.css");
+        src.Add("https://github.com/onesandzeros415/" + dotNetVersion + "/raw/master/aspxzipit/assets/images/progress.gif");
+        src.Add("https://github.com/onesandzeros415/" + dotNetVersion + "/raw/master/aspxzipit/assets/css/StyleSheet.css");
+        src.Add("https://github.com/onesandzeros415/" + dotNetVersion + "/raw/master/aspxzipit/assets/images/background.jpg");
+        src.Add("https://github.com/onesandzeros415/" + dotNetVersion + "/raw/master/aspxzipit/assets/images/logout.png");
+        src.Add("https://github.com/onesandzeros415/" + dotNetVersion + "/raw/master/aspxzipit/assets/images/settings.gif");
+        src.Add("https://github.com/onesandzeros415/" + dotNetVersion + "/raw/master/aspxzipit/assets/js/aspxzipit.js");
 
+        //Setup destination install list
         List<string> dst = new List<string>();
         dst.Add(@installerPath_AppData + fileName1);
         dst.Add(@installerPath_aspxzipit + fileName8);
+        dst.Add(@installerPath_aspxzipit + fileName26);
         dst.Add(@installerPath_aspxzipit + fileName9);
         dst.Add(@installerPath_aspxzipit + fileName10);
         dst.Add(@installerPath_aspxzipit + fileName11);
@@ -223,16 +229,20 @@
         dst.Add(@installerPath_progress + fileName15);
         dst.Add(@installerPath_progress + fileName16);
         dst.Add(@installerPath_images + fileName17);
-        dst.Add(@installerPath_styles + fileName18);
+        dst.Add(@installerPath_images + fileName22);
+        dst.Add(@installerPath_images + fileName23);
+        dst.Add(@installerPath_images + fileName24);
+        dst.Add(@installerPath_css + fileName18);
+        dst.Add(@installerPath_js + fileName25);
 
         try
         {
-            //Remove previous install
-            foreach (string file in dst)
-            {
-                File.Delete(file);
-                EventLogReporting(DateTime.Now.ToString("MM-dd-yyyy_HH-mm-ss") + LogResults1 + file + "\r\n");
-            }
+            //Remove previous ASPX Zipit install
+            System.IO.DirectoryInfo directory = new System.IO.DirectoryInfo(@installerPath_aspxzipit);
+            Empty(directory, installerPath_aspxzipit);
+            Directory.Delete(installerPath_aspxzipit);
+
+            EventLogReporting(DateTime.Now.ToString("MM-dd-yyyy_HH-mm-ss") + LogResults1 + installerPath_aspxzipit + "\r\n");
 
             if (dotNetVersion == "ASPXZipIt-NET35")
             {
@@ -371,6 +381,12 @@
                 File.AppendAllText(path + "\\aspxzipit_eventlog.txt", String.Format(LogResultsString, Environment.NewLine));
             }
         }
+    }
+    protected static void Empty(System.IO.DirectoryInfo directory, string dirName)
+    {
+        foreach (System.IO.FileInfo file in directory.GetFiles()) file.Delete();
+        foreach (System.IO.DirectoryInfo subDirectory in directory.GetDirectories()) subDirectory.Delete(true);
+        Directory.Delete(dirName);
     }
 </script>
 <head id="Head1" runat="server">
