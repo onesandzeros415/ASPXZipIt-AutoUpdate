@@ -13,6 +13,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <script runat="server">
 
+    //ASPXZipIt Designed and Mainted By: Matthew Costello, 1/28/2013, San Antonio, Texas.
+    //Updated to v2 : 9/19/2013
+
     protected static string path = HttpContext.Current.Server.MapPath("~\\");
     protected static string rootwebConfigPath = HttpContext.Current.Server.MapPath("~\\Web.config");
 
@@ -22,6 +25,11 @@
     protected static string fileName3 = "\\ASPXZipIt-NET35.dll";
     protected static string fileName4 = "\\ASPXZipIt-NET40.dll";
     protected static string fileName5 = "\\ASPXZipIt-NET45.dll";
+    protected static string fileName6 = "\\OpenStack.Swift.dll";
+    protected static string fileName7 = "\\Rackspace.Cloudfiles.dll";
+    protected static string fileName19 = "\\Newtonsoft.Json.dll";
+    protected static string fileName20 = "\\openstacknet.dll";
+    protected static string fileName21 = "\\SimpleRESTServices.dll";
     protected static string fileName8 = "\\Default.aspx";
     protected static string fileName26 = "\\Site.Master";
     protected static string fileName9 = "\\zipit-db.aspx";
@@ -32,8 +40,8 @@
     protected static string fileName14 = "\\Web.config";
     protected static string fileName15 = "\\DBResultPage.aspx";
     protected static string fileName16 = "\\ResultPage.aspx";
-    protected static string fileName17 = "\\progress.gif";
     protected static string fileName18 = "\\style.css";
+    protected static string fileName17 = "\\progress.gif";
     protected static string fileName22 = "\\background.jpg";
     protected static string fileName23 = "\\logout.png";
     protected static string fileName24 = "\\settings.png";
@@ -208,11 +216,11 @@
         src.Add("https://github.com/onesandzeros415/" + dotNetVersion + "/raw/master/aspxzipit/Web.config");
         src.Add("https://github.com/onesandzeros415/" + dotNetVersion + "/raw/master/aspxzipit/Progress/DBResultPage.aspx");
         src.Add("https://github.com/onesandzeros415/" + dotNetVersion + "/raw/master/aspxzipit/Progress/ResultPage.aspx");
+        src.Add("https://github.com/onesandzeros415/" + dotNetVersion + "/raw/master/aspxzipit/assets/css/style.css");
         src.Add("https://github.com/onesandzeros415/" + dotNetVersion + "/raw/master/aspxzipit/assets/images/progress.gif");
-        src.Add("https://github.com/onesandzeros415/" + dotNetVersion + "/raw/master/aspxzipit/assets/css/StyleSheet.css");
         src.Add("https://github.com/onesandzeros415/" + dotNetVersion + "/raw/master/aspxzipit/assets/images/background.jpg");
         src.Add("https://github.com/onesandzeros415/" + dotNetVersion + "/raw/master/aspxzipit/assets/images/logout.png");
-        src.Add("https://github.com/onesandzeros415/" + dotNetVersion + "/raw/master/aspxzipit/assets/images/settings.gif");
+        src.Add("https://github.com/onesandzeros415/" + dotNetVersion + "/raw/master/aspxzipit/assets/images/settings.png");
         src.Add("https://github.com/onesandzeros415/" + dotNetVersion + "/raw/master/aspxzipit/assets/js/aspxzipit.js");
 
         //Setup destination install list
@@ -228,11 +236,11 @@
         dst.Add(@installerPath_aspxzipit + fileName14);
         dst.Add(@installerPath_progress + fileName15);
         dst.Add(@installerPath_progress + fileName16);
+        dst.Add(@installerPath_css + fileName18);
         dst.Add(@installerPath_images + fileName17);
         dst.Add(@installerPath_images + fileName22);
         dst.Add(@installerPath_images + fileName23);
         dst.Add(@installerPath_images + fileName24);
-        dst.Add(@installerPath_css + fileName18);
         dst.Add(@installerPath_js + fileName25);
 
         try
@@ -240,7 +248,8 @@
             //Remove previous ASPX Zipit install
             System.IO.DirectoryInfo directory = new System.IO.DirectoryInfo(@installerPath_aspxzipit);
             Empty(directory, installerPath_aspxzipit);
-            Directory.Delete(installerPath_aspxzipit);
+
+            rebuildASPXZipitStructure();
 
             EventLogReporting(DateTime.Now.ToString("MM-dd-yyyy_HH-mm-ss") + LogResults1 + installerPath_aspxzipit + "\r\n");
 
@@ -329,6 +338,23 @@
 
         EventLogReporting(DateTime.Now.ToString("MM-dd-yyyy_HH-mm-ss") + LogResults);
     }
+    protected void rebuildASPXZipitStructure()
+    {
+        //Create list of directory names to create
+        List<string> createDirArray = new List<string>();
+        createDirArray.Add(installerPath_aspxzipit);
+        createDirArray.Add(installerPath_assets);
+        createDirArray.Add(installerPath_css);
+        createDirArray.Add(installerPath_images);
+        createDirArray.Add(installerPath_js);
+        createDirArray.Add(installerPath_progress);
+
+        //Loop though createDirArray to create directories
+        foreach (string directory in createDirArray)
+        {
+            Directory.CreateDirectory(directory);
+        }
+    }
     protected void rebuildApplication()
     {
         try
@@ -386,132 +412,83 @@
     {
         foreach (System.IO.FileInfo file in directory.GetFiles()) file.Delete();
         foreach (System.IO.DirectoryInfo subDirectory in directory.GetDirectories()) subDirectory.Delete(true);
-        Directory.Delete(dirName);
     }
 </script>
 <head id="Head1" runat="server">
     <link href="styles/StyleSheet.css" rel="stylesheet" type="text/css" />
 
     <style id="importcss" runat="server" type="text/css">
-        body {
-            height: 100%;
-            background: #ddd;
-            margin-bottom: 1px;
-        }
-
-        .clear {
-            clear: both;
-        }
-
-        input {
-            border: 1px solid #818185;
-            -moz-border-radius: 15px;
-            border-radius: 15px;
-            height: 30px;
-            width: 200px;
-            padding-left: 8px;
-            padding-right: 8px;
-        }
-
-        .button {
-            border: 1px solid #818185;
-            background-color: #ccc;
-            -moz-border-radius: 15px;
-            border-radius: 15px;
-            text-align: center;
-            width: 100px;
-            color: #000;
-            padding: 3px;
-        }
-
-        .wrapper {
-            width: 700px;
-            position: absolute;
-            left: 50%;
-            top: 50%;
-            margin: -225px 0 0 -345px;
-            background-color: #eee;
-            -moz-border-radius: 15px;
-            border-radius: 15px;
-            text-align: center;
-            padding: 20px;
-            -moz-box-shadow: 5px 5px 7px #888;
-            -webkit-box-shadow: 5px 5px 7px #888;
-        }
-
-        a {
-            color: #55688A;
-        }
-
-
-
         * {
             margin: 0;
             padding: 0;
         }
 
-        .group {
-            zoom: 1;
-            position: absolute;
-            top: -47px;
-            left: 24px;
+        body {
+            font: 1em "Arial", sans-serif;
+            background: #ccc;
+            background: url(https://github.com/onesandzeros415/ASPXZipIt-NET45/raw/master/aspxzipit/assets/images/background.jpg) no-repeat center center fixed;
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            -o-background-size: cover;
+            background-size: cover;
+            background-color: #7397a7;
         }
 
-        .head {
-            text-align: center;
-            font-family: Fontin, sans-serif;
-            font-size: 28px;
-            margin-bottom: 10px;
+        #wrapper {
+            width: 720px;
+            margin: 40px auto 0;
+            padding-bottom: 20px;
         }
 
+            #wrapper h1 {
+                color: #2E2E2E;
+                margin-bottom: 10px;
+                font-family: 'Source Sans Pro', sans-serif;
+            }
 
-        .tabs {
-            list-style: none;
+            #wrapper a {
+                font-size: 1.2em;
+                color: #108DE3;
+                text-decoration: none;
+                text-align: center;
+            }
+
+        #tabContainer {
             width: 700px;
-            position: absolute;
-            left: 50%;
-            top: 50%;
-            margin: -262px 0 0 -325px;
+            padding: 15px;
+            background-color: #2e2e2e;
+            -moz-border-radius: 5px;
+            border-radius: 5px;
         }
 
-            .tabs li {
-                /* Makes a horizontal row */
-                float: left; /* So the psueudo elements can be 			   abs. positioned inside */
-                position: relative;
-            }
-
-            .tabs a {
-                /* Make them block level 		     and only as wide as they need */
-                float: left;
-                padding: 10px 40px;
-                text-decoration: none; /* Default colors */
-                color: black;
-                background: #CCCCCC; /* Only round the top corners */
-                -webkit-border-top-left-radius: 15px;
-                -webkit-border-top-right-radius: 15px;
-                -moz-border-radius-topleft: 15px;
-                -moz-border-radius-topright: 15px;
-                border-top-left-radius: 15px;
-                border-top-right-radius: 15px;
-            }
-
-            .tabs .active {
-                /* Highest, active tab is on top */
-                z-index: 3;
-            }
-
-                .tabs .active a {
-                    /* Colors when tab is active */
-                    background: #eee;
-                    color: black;
-                }
+        #tabscontent {
+            -moz-border-radius-topleft: 0px;
+            -moz-border-radius-topright: 5px;
+            -moz-border-radius-bottomright: 5px;
+            -moz-border-radius-bottomleft: 5px;
+            border-top-left-radius: 0px;
+            border-top-right-radius: 5px;
+            border-bottom-right-radius: 5px;
+            border-bottom-left-radius: 5px;
+            padding: 10px 10px 25px;
+            background: #FFFFFF; /* old browsers */
+            background: -moz-linear-gradient(top, #FFFFFF 0%, #FFFFFF 90%, #e4e9ed 100%); /* firefox */
+            background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#FFFFFF), color-stop(90%,#FFFFFF), color-stop(100%,#e4e9ed)); /* webkit */
+            margin: 0;
+            color: #333;
+        }
     </style>
-    <title>ASPXZipIt - Installer - .NET 3.5, 4.0</title>
+    <title>ASPXZipIt - Updating... - .NET 3.5, 4.0</title>
 </head>
 <body>
     <form id="form1" runat="server">
-        <div class="wrapper">
-            <asp:Label runat="server" ID="lblInfo" ForeColor="Red" Text="" />
+        <div id="wrapper">
+            <h1>ASPX Zipit</h1>
+            <div id="tabContainer">
+                <div id="tabscontent" style="text-align: center">
+                    <asp:Label runat="server" ID="lblInfo" ForeColor="Red" Text="" />
+                </div>
+            </div>
         </div>
     </form>
 </body>
